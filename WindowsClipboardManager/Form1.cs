@@ -94,31 +94,37 @@ namespace WindowsClipboardManager
             {
                 string currentText = Clipboard.GetText();
 
-                // Check if the list is empty or the newest entry isn't the same text
-                if (clipboardHistory.Count == 0 || clipboardHistory[0].TextData != currentText)
+                if (currentText != null)
                 {
-                    // Add a new text entry
-                    ClipboardEntry textEntry = new ClipboardEntry(currentText);
-                    clipboardHistory.Insert(0, textEntry);
-                    changeOccured = true;
+                    // Check if the list is empty or the newest entry isn't the same text
+                    if (clipboardHistory.Count == 0 || clipboardHistory[0].TextData != currentText)
+                    {
+                        // Add a new text entry
+                        ClipboardEntry textEntry = new ClipboardEntry(currentText);
+                        clipboardHistory.Insert(0, textEntry);
+                        changeOccured = true;
+                    }
                 }
             }
             else if (Clipboard.ContainsImage())
             {
                 Image currentImage = Clipboard.GetImage();
 
-                // Check if the list is empty or the newest entry isn't the same image
-                if (clipboardHistory.Count == 0 || !AreImagesEqual(clipboardHistory[0].OriginalImage, currentImage))
+                if (currentImage != null)
                 {
-                    // Add a new image entry (with a scaled-down preview)
-                    ClipboardEntry imageEntry = new ClipboardEntry(currentImage, 70); // Scale preview to 70px tall
-                    clipboardHistory.Insert(0, imageEntry);
+                    // Check if the list is empty or the newest entry isn't the same image
+                    if (clipboardHistory.Count == 0 || !AreImagesEqual(clipboardHistory[0].OriginalImage, currentImage))
+                    {
+                        // Add a new image entry (with a scaled-down preview)
+                        ClipboardEntry imageEntry = new ClipboardEntry(currentImage, 70); // Scale preview to 70px tall
+                        clipboardHistory.Insert(0, imageEntry);
 
-                    // Limit history size to 20 entries
-                    if (clipboardHistory.Count > 20)
-                        clipboardHistory.RemoveAt(20);
+                        // Limit history size to 20 entries
+                        if (clipboardHistory.Count > 20)
+                            clipboardHistory.RemoveAt(20);
 
-                    changeOccured = true;
+                        changeOccured = true;
+                    }
                 }
             }
 
