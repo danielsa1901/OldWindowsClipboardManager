@@ -132,7 +132,7 @@ namespace WindowsClipboardManager
             if (clipboardHistory.Count > 20)
             {
                 ClipboardEntry entryToRemove = clipboardHistory[20];
-                entryToRemove.Dispose();
+                entryToRemove?.Dispose();
                 clipboardHistory.RemoveAt(20);
                 changeOccured = true;
             }
